@@ -13,8 +13,8 @@ async function main() {
         console.log("The database server is now connected")
     } catch (error) { //For catch statements, make sure that you have the error passed as a parameter
         //send a console.log to the server when it starts if the database connection fails, and log the error
-        //console.error(`Server failure, error is: ${error}`)
-        next(error)
+        console.error(`Server failure, error is: ${error}`)
+        //next(error)
     }
 }
 //call the function to do dat job!!!!

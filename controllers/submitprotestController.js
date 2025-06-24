@@ -1,23 +1,22 @@
 //NO TOUCHY FROM NOW ON
 const siteData = require("../data/siteData");
 
-const SubmitProtest = require("../models/submitprotestModel");
+const SubmitProtest = require("../models/protestsubmitModel");
 
 const getAllProtestSubmissions = async (request, response, next) => {
   //Use a try-catch statement to test routing. Return the response.
   try {
     //Move the upgraded iterator inside of the try/catch and use the find method on the book Model, with an empty object as the parameter
-    const books = await SubmitProtest.find({});
+    const protests = await SubmitProtest.find({});
 
-    const sort = await SubmitProtest.find({}).sort({title: 1})
+    //const sort = await SubmitProtest.find({}).sort({title: 1})
     
     return response.status(200).json({
       success: {
-        message: "This route points to the Books page with all of the books",
+        message: "This route points to the Protests page with all of the protest",
       },
-      data : {submitprotest},
-      alt: {sort},
-      siteData,
+      data : {protests},
+      //alt: {sort},
     });
   } catch (error) { //refactor the error statement to catch the next error.
     return next(error)
@@ -34,17 +33,17 @@ const getSingleProtest = async (request, response, next) => {
       throw new Error("Id is required");
     }
 
-    //Refactor the iterator that stores the foundBook, ex. (one) book after finding the matching _id value to use the findById method on the book Model, with the _id as the parameter
-    const book = SubmitProtest.findById(_id)
+    //Refactor the iterator that stores the foundProtest, ex. (one) protest after finding the matching _id value to use the findById method on the protest Model, with the _id as the parameter
+    const protest = SubmitProtest.findById(_id)
 
-    //Book Check: if there is not an book found, we will use the throw command with a new Error constructor object, and a string that states: "Book not found"
-    if (!book) {
+    //Protest Check: if there is not an protest found, we will use the throw command with a new Error constructor object, and a string that states: "Book not found"
+    if (!protest) {
       throw new Error("Event not found");
     }
 
     return response.status(200).json({
       success: { message: "Event found" },
-      data: { SubmitProtest },
+      data: { protest },
     });
   } catch (error) { //refactor the error statement to catch the next error.
     return next(error)
@@ -52,22 +51,22 @@ const getSingleProtest = async (request, response, next) => {
 };
 
 const createSubmitProtest = async (request, response, next) => {
-  const { location, date, time, description } = request.body;
+  const { area, date, time, description } = request.body;
   try {
-    //Required Value Check from Model: if the required information (title, author, price, and starRating) are not present, we need to handle errors early before we proceed within our try statement.
-    if (!location || !date|| !time || !description) {
+    //Required Value Check from Model: if the required information are not present, we need to handle errors early before we proceed within our try statement.
+    if (!area || !date|| !time || !description) {
       throw new Error("Missing required fields, please review.");
     }
 
-    //Now, we're going to create a new Book constructor using the new keyword
+    //Now, we're going to create a new constructor using the new keyword
     const newSubmitProtest = new SubmitProtest({
-     location,
+     area,
      date, 
      time, 
      description,
     });
 
-    //Refactor from pushing new entries from the bookInventory and instead, await the newBook's information and save it using the save method.
+
     await newSubmitProtest.save()
 
     return response.status(201).json({
@@ -82,18 +81,18 @@ const createSubmitProtest = async (request, response, next) => {
 
 const updateSubmitProtest = async (request, response, next) => {
   const { _id } = request.params;
-  const { location, date, time, description } = request.body;
+  const { area, date, time, description } = request.body;
   try {
-    //Required Value Check from Model: if the required information (title, author, price, and starRating) are not present, we need to handle errors early before we proceed within our try statement.
-    if (!location || !date|| !time|| !description) {
+    //Required Value Check from Model: if the required information are not present, we need to handle errors early before we proceed within our try statement.
+    if (!area || !date|| !time|| !description) {
       throw new Error("Missing required fields, please review.");
     }
-    //upgrade the object to await for the Book model to be found via the findByIdAndUpdate method, with three parameters, _id, an object using the set method on the form parameters and {new: true}
+    //upgrade the object to await for the model to be found via the findByIdAndUpdate method, with three parameters, _id, an object using the set method on the form parameters and {new: true}
     const updatedSubmitProtest = await SubmitProtest.findByIdAndUpdate(
       _id,
       {
         $set: {
-          location,
+          area,
           date,
           time,
           description,
@@ -101,7 +100,7 @@ const updateSubmitProtest = async (request, response, next) => {
       },
       {new: true}
     );
-    //Update Book Check: if for some reason, the book was not updated (or can't be found), use the throw command with the new keyword on an Error constructor and write a message that says "Book not found".
+   //Event check
     if (!updatedSubmitProtest) {
       throw new Error("Event not found");
     }

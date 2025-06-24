@@ -2,7 +2,6 @@ require("dotenv").config();
 require("./config/connection");
 require("./config/authStrategy");
 
-
 //initialize express environment
 const express = require("express");
 //allow the app to use the express package
@@ -71,6 +70,7 @@ app.get("/", (request, response, next) => {
   response.status(200).json({success: {message: "This route points to the Home page"}, data: siteData , statusCode: 200});
 });
 
+let isSignedIn = true; //mimics admin features
 app.get("/admin", (req, res, next) => {
     //res.send("This route points to the Admin Console page");
     res.status(200).json({
@@ -86,7 +86,7 @@ app.get("/admin", (req, res, next) => {
 //Tell the app to use the routing variables you defined earlier, booksRoutes and authorsRoutes
 // app.use("/api/books", booksRoutes);
 app.use("/auth", authRoutes);
-app.use("/api/protestsubmit", protestsubmitRoutes);
+app.use("/api/submitprotest/", protestsubmitRoutes);
 
 //--- PER 1 UPGRADE: ERR HANDLING CODE  ---
 app.use((error, request, response, next) => {
@@ -115,46 +115,9 @@ app.use((error, request, response, next) => {
       statusCode: serverErrStatus
     })
     //UNREACHABLE
+  })
 
 //have the app listen at the PORT where a console.log says `Server is listening on ${PORT}. Connection established.`
 app.listen(PORT, () => { //http://localhost:3000
-    console.log( Rebel Cause server is listening on port http://localhost:${PORT}. Connection established.`);
+    console.log( `Rebel Cause server is listening on port http://localhost:${PORT}. Connection established.`);
 });
-
-//Upgrade ALL routes
-//Skeleton: 
-// app.get("", (req, res, next) => {
-//   res.status().json({
-//     success: {}, //the str that registers when we get an OK response
-//     data: {},   //the data that should render within this object
-//     statusCode:  //this should be a number
-//   });
-// });
-
-//Use the question against itself!!!
-
-//Refactor home
-
-//Refactor admin
-
-//Refactor books
-
-//Refactor books/id
-
-//--------- ^PREVIOUS CLASSWORK^ -------------
-//START HERE: 
-/*
-Node.js server Review
-
-With the same five basic ROUTES you just made, comment out the .send() method
-
-REFACTOR the handler from .send() to .status().json with a success message and the statusCode
-*/
-//--------- PER 2: CW: Dynamic Node Review ------------
-/*
-Create 4 NEW GET routes that send a request, receive a response, and move to the next block of code w/ .status().json and a success message :
-PATH: /books/create, HANDLER:"This route points to the Create Book page”
-PATH: /books/:_id, HANDLER: "This route points to the specific book via the ID”
-PATH: /authors/create, HANDLER: "This route points to the Create Author page”
-PATH: /authors/:_id, HANDLER: "This route points to the specific author via the ID”
-*/  ``

@@ -6,7 +6,7 @@ const router = express.Router();
 
 const { register, login, logout, localLogin } = require("../controllers/authController");
 
-//All routes in this file start with "/api" //new: CHANGE TO "/auth" to reflect app.js change
+//All routes in this file start with "/auth"
 router.get("/", (request, response, next) => {
     return response.json("auth routing initialized")
 }) //http://localhost:3000/auth

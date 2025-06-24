@@ -15,6 +15,7 @@ const userSchema = new Schema({
     // }, -- Alias
     //more values 
     alias: {
+      type: String,
       required: true,
         unique: true,
         trim: true,

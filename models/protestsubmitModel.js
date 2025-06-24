@@ -1,11 +1,10 @@
 //NO TOUCHY FROM NOW ON
-const { time } = require("console");
 const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
 const submitprotestSchema = new Schema({
-  location: {
+  area: {
     type: String,
     required: true,
     trim: true,
