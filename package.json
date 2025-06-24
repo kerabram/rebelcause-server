@@ -1,0 +1,20 @@
+{
+  "name": "rebelcause-server",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/kerabram/rebelcause-server#readme",
+  "bugs": {
+    "url": "https://github.com/kerabram/rebelcause-server/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kerabram/rebelcause-server.git"
+  },
+  "license": "ISC",
+  "author": "kera b",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
