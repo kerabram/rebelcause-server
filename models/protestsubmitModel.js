@@ -17,7 +17,7 @@ const submitprotestSchema = new Schema({
     trim: true,
   },
   time: {
-    type: Number,
+    type: String,
     required: true,
   },
   description: {

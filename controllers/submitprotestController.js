@@ -3,7 +3,53 @@ const siteData = require("../data/siteData");
 
 const SubmitProtest = require("../models/submitprotestModel");
 
+const getAllProtestSubmissions = async (request, response, next) => {
+  //Use a try-catch statement to test routing. Return the response.
+  try {
+    //Move the upgraded iterator inside of the try/catch and use the find method on the book Model, with an empty object as the parameter
+    const books = await SubmitProtest.find({});
 
+    const sort = await SubmitProtest.find({}).sort({title: 1})
+    
+    return response.status(200).json({
+      success: {
+        message: "This route points to the Books page with all of the books",
+      },
+      data : {submitprotest},
+      alt: {sort},
+      siteData,
+    });
+  } catch (error) { //refactor the error statement to catch the next error.
+    return next(error)
+  }
+};
+
+const getSingleProtest = async (request, response, next) => {
+  const { _id } = request.params; // store the request.params object in variable, get the id from params
+
+  //Use a try-catch statement to test routing. Return the response.
+  try {
+    // ID Check: if there is not an Id found, we will use the throw command with a new Error constructor object, and a string that states: "Id is required"
+    if (!_id) {
+      throw new Error("Id is required");
+    }
+
+    //Refactor the iterator that stores the foundBook, ex. (one) book after finding the matching _id value to use the findById method on the book Model, with the _id as the parameter
+    const book = SubmitProtest.findById(_id)
+
+    //Book Check: if there is not an book found, we will use the throw command with a new Error constructor object, and a string that states: "Book not found"
+    if (!book) {
+      throw new Error("Event not found");
+    }
+
+    return response.status(200).json({
+      success: { message: "Event found" },
+      data: { SubmitProtest },
+    });
+  } catch (error) { //refactor the error statement to catch the next error.
+    return next(error)
+  }
+};
 
 const createSubmitProtest = async (request, response, next) => {
   const { location, date, time, description } = request.body;
@@ -60,7 +106,7 @@ const updateSubmitProtest = async (request, response, next) => {
       throw new Error("Event not found");
     }
     return response.status(201).json({
-      success: { message: "The book is updated" },
+      success: { message: "The protest details are updated" },
       data: { updatedSubmitProtest },
       statusCode: 201 //add a status code for confirmation
     });
@@ -90,4 +136,4 @@ const deleteSubmitProtest = async (request, response, next) => {
   }
 };
 
-module.exports = { createSubmitProtest, updateSubmitProtest, deleteSubmitProtest };
+module.exports = { getAllProtestSubmissions, getSingleProtest, createSubmitProtest, updateSubmitProtest, deleteSubmitProtest };
